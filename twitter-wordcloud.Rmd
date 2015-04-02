@@ -1,0 +1,123 @@
+---
+title: "Word Clouds of Indonesian Media Outlet Twitter User Timelines"
+author: "Hendy Irawan"
+date: "02/04/2015"
+output: html_document
+---
+
+## R Programming Language Tutorial Videos on YouTube
+
+See [R Programming Language Tutorial Videos by Hendy Irawan](https://www.youtube.com/playlist?list=PLKF12aQHzSaN6i1mz2a1Sg2DIKsXHlVmE).
+
+## Installing Packages: libcurl4-openssl-dev, TwitteR, httpuv, tm, wordcloud, RColorBrewer
+
+Install Ubuntu package `libcurl4-openssl-dev` required by `RCurl` R package:
+
+```
+sudo aptitude install libcurl4-openssl-dev
+```
+
+Install the R packages:
+
+```{r, eval=FALSE}
+install.packages(c('TwitteR', 'httpuv', 'tm', 'wordcloud', 'RColorBrewer'))
+```
+
+## Setup Twitter OAuth
+
+[Get your Twitter app OAuth consumer credentials](https://apps.twitter.com/), then:
+
+```{r, eval=FALSE}
+library(twitter)
+setup_twitter_oauth(consumer_key, consumer_secret)
+```
+
+## Grab data
+
+```{r, eval=FALSE}
+tl_hidcom <- userTimeline('hidcom', n=500)
+```
+
+View it as data frame, make sure to convert to `UTF-8` to avoid encoding issues later:
+
+```{r, eval=FALSE}
+tl_hidcom.df <- twListToDF(tl_hidcom)
+tl_hidcom.df$text <- iconv(tl_hidcom.df$text, to='utf-8')
+View(tl_hidcom.df)
+```
+
+Get summary:
+
+```{r}
+tl_hidcom.df <- read.csv('tl_hidcom_2015-04-02.csv')
+summary(tl_hidcom.df)
+```
+
+Save the data frame to CSV:
+
+```{r, eval=FALSE}
+write.csv(twListToDF(tl_hidcom), 'tl_hidcom.csv')
+```
+
+## Make a Corpus
+
+Grab just text column:
+
+```{r}
+head(tl_hidcom.df$text)
+```
+
+Make a **tm** `Corpus` from the data frame `VectorSource`:
+
+```{r}
+library(tm)
+tl_hidcom.corpus <- Corpus(VectorSource(tl_hidcom.df$text))
+```
+
+Make a `TermDocumentMatrix`, with desired text preprocessors:
+
+```{r}
+tl_hidcom.tdm <- TermDocumentMatrix(tl_hidcom.corpus,
+  control = list(stripWhitespace = TRUE, tolower = TRUE,
+                 stopwords = c('hidayatullah'), removeNumbers = TRUE,
+                 removePunctuation = TRUE))
+```
+
+Get the matrix from the `TermDocumentMatrix`:
+
+```{r}
+tl_hidcom.m <- as.matrix(tl_hidcom.tdm)
+tl_hidcom.m[1:10, 1:20]
+# View(tl_hidcom.m)
+```
+
+Get the word frequencies for `freq > 0`, and sort them (nice way):
+
+```{r}
+tl_hidcom.wf <- sort(rowSums(tl_hidcom.m), decreasing=TRUE)
+tl_hidcom.wf <- tl_hidcom.wf[tl_hidcom.wf > 0]
+tl_hidcom.dm <- data.frame(word=names(tl_hidcom.wf),
+                           freq=tl_hidcom.wf)
+head(tl_hidcom.dm)
+# View(tl_hidcom.dm)
+```
+
+or alternatively: (my own convoluted way hehe ;-) )
+
+```{r}
+tl_hidcom.dm <- data.frame(word=rownames(tl_hidcom.m),
+                           freq=rowSums(tl_hidcom.m))
+tl_hidcom.dm <- tl_hidcom.dm[tl_hidcom.dm$freq > 0,]
+tl_hidcom.dm <- tl_hidcom.dm[order(tl_hidcom.dm$freq, decreasing=TRUE),]
+head(tl_hidcom.dm)
+# View(tl_hidcom_dm)
+```
+
+## Word Cloud
+
+```{r}
+library(wordcloud)
+library(RColorBrewer)
+wordcloud(tl_hidcom.dm$word, tl_hidcom.dm$freq,
+          random.order=FALSE, colors=brewer.pal(8, 'Dark2'))
+```

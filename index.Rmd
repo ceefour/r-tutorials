@@ -1,0 +1,14 @@
+---
+title: "R Programming Language Tutorials and Experiments, especially in Artificial Intelligence, Text/Data Mining, Natural Language Understanding, Bayesian networks, Predictive Analytics"
+author: "Hendy Irawan"
+date: "02/04/2015"
+output: html_document
+---
+
+## R Programming Language Tutorial Videos on YouTube
+
+See [R Programming Language Tutorial Videos by Hendy Irawan](https://www.youtube.com/playlist?list=PLKF12aQHzSaN6i1mz2a1Sg2DIKsXHlVmE).
+
+## Table of Contents
+
+1. [Word Clouds of Indonesian Media Outlet Twitter User Timelines](twitter-wordcloud.html)
