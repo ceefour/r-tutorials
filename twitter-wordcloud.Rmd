@@ -79,8 +79,9 @@ Make a `TermDocumentMatrix`, with desired text preprocessors:
 ```{r}
 tl_hidcom.tdm <- TermDocumentMatrix(tl_hidcom.corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
-                 stopwords = c('hidayatullah'), removeNumbers = TRUE,
-                 removePunctuation = TRUE))
+                 removeNumbers = TRUE,
+                 removePunctuation = TRUE,
+                 stopwords = c('hidayatullah', 'hidcom') ))
 ```
 
 Get the matrix from the `TermDocumentMatrix`:
@@ -115,8 +116,10 @@ head(tl_hidcom.dm)
 
 ## Word Cloud
 
+Just to be sane, only the first 300 words:
+
 ```{r}
 library(wordcloud)
-wordcloud(tl_hidcom.dm$word, tl_hidcom.dm$freq,
+wordcloud(head(tl_hidcom.dm$word, 300), head(tl_hidcom.dm$freq, 300),
           random.order=FALSE, colors=brewer.pal(8, 'Dark2'))
 ```
