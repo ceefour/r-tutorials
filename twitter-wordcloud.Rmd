@@ -20,7 +20,7 @@ sudo aptitude install libcurl4-openssl-dev
 Install the R packages:
 
 ```{r, eval=FALSE}
-install.packages(c('TwitteR', 'httpuv', 'tm', 'wordcloud', 'RColorBrewer'))
+install.packages(c('TwitteR', 'httpuv', 'tm', 'wordcloud'))
 ```
 
 ## Setup Twitter OAuth
@@ -117,7 +117,6 @@ head(tl_hidcom.dm)
 
 ```{r}
 library(wordcloud)
-library(RColorBrewer)
 wordcloud(tl_hidcom.dm$word, tl_hidcom.dm$freq,
           random.order=FALSE, colors=brewer.pal(8, 'Dark2'))
 ```
