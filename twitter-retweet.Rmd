@@ -1,0 +1,100 @@
+---
+title: "Twitter Engagement Analysis: Retweets and Favorites"
+author: "Hendy Irawan"
+date: "April 3, 2015"
+output: html_document
+---
+
+## R Programming Language Tutorial Videos on YouTube
+
+See [R Programming Language Tutorial Videos by Hendy Irawan](https://www.youtube.com/playlist?list=PLKF12aQHzSaN6i1mz2a1Sg2DIKsXHlVmE).
+
+## Installing Packages: libcurl4-openssl-dev, TwitteR, httpuv, tm, wordcloud, RColorBrewer
+
+Install Ubuntu package `libcurl4-openssl-dev` required by `RCurl` R package:
+
+```
+sudo aptitude install libcurl4-openssl-dev
+```
+
+Install the R packages:
+
+```{r, eval=FALSE}
+install.packages(c('TwitteR', 'httpuv', 'tm', 'wordcloud'))
+```
+
+## Install ggplot2
+
+```{r, eval=FALSE}
+install.packages('ggplot2')
+```
+
+## Load Data
+
+Via Twitter API:
+
+```{r, eval=FALSE}
+tl_dakwatuna <- userTimeline('dakwatuna', n=1000, includeRts = TRUE)
+tl_dakwatuna.df <- twListToDF(tl_dakwatuna)
+tl_dakwatuna.df$text <- iconv(tl_dakwatuna.df$text, to='utf-8')
+write.csv(tl_dakwatuna.df, '~/git/r-tutorials/tl_dakwatuna_2015-04-03.csv')
+```
+
+or offline from dataset:
+
+```{r}
+tl_dakwatuna.df <- read.csv('tl_dakwatuna_2015-04-03_tagged.csv', row.names=1)
+```
+
+## Retweets vs Favorites
+
+Histogram:
+
+```{r}
+library(ggplot2)
+
+ggplot(tl_dakwatuna.df, aes(x=retweetCount)) + geom_histogram(binwidth=0.1, fill='green') + geom_smooth(stat='bin', binwidth=0.1, colour='darkgreen') + geom_histogram(aes(x=favoriteCount), fill='blue', binwidth=0.1, alpha=0.5) + scale_x_log10() + ggtitle('@dakwatuna engagement')
+```
+
+Scatterplot:
+
+```{r}
+library(ggplot2)
+
+ggplot(tl_dakwatuna.df, aes(x=retweetCount, y=favoriteCount)) + geom_jitter() + scale_x_log10() + scale_y_log10() + ggtitle('@dakwatuna retweets vs favorites')
+```
+
+## Tweets, Retweets, Favorites, and their ratios by Hour-of-Day
+
+Make the hourOfDay column as factors (if necessary):
+
+```{r}
+df <- tl_dakwatuna.df
+#df$hourOfDay = factor(df$hourOfDay)
+summary(df$hourOfDay)
+```
+
+Make a data frame having the counts per group:
+
+```{r}
+library(plyr)
+library(ggplot2)
+
+byHourOfDay <-ddply(df, ~hourOfDay, summarise,
+                    tweetCount = length(text),
+                    retweetSum = sum(retweetCount), retweetMean = mean(retweetCount), retweetSd = sd(retweetCount), retweetMax = max(retweetCount),
+                    favoriteSum = sum(favoriteCount), favoriteMean = mean(favoriteCount), favoriteSd = sd(favoriteCount), favoriteMax = max(favoriteCount),
+                    favoriteRatioSum = sum(as.numeric(favoriteRatio)))
+#View(byHourOfDay)
+
+engagementScale = 10
+ggplot(byHourOfDay, aes(x=hourOfDay, y=tweetCount, fill=hourOfDay)) + 
+  ylim(0, max(byHourOfDay$tweetCount)) +
+  geom_bar(stat='identity') + 
+  geom_pointrange(aes(y=engagementScale*retweetMean, ymin=engagementScale*pmax(retweetMean-retweetSd, 0), ymax=engagementScale*(retweetMean+retweetSd), size=favoriteRatioSum), color='green') +
+  geom_smooth(method='loess', aes(y=engagementScale*retweetMean), fill='green', color='green') +
+  geom_pointrange(aes(y=engagementScale*favoriteMean, ymin=engagementScale*pmax(favoriteMean-favoriteSd, 0), ymax=engagementScale*(favoriteMean+favoriteSd)), size=1, stat='identity', color='orange') +
+  geom_smooth(method='loess', aes(y=engagementScale*favoriteMean), fill='orange', color='orange') +
+  scale_x_continuous(breaks=byHourOfDay$hourOfDay) +
+  ggtitle('@dakwatuna tweets by hour-of-day')
+```

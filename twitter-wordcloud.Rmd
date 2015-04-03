@@ -35,7 +35,7 @@ setup_twitter_oauth(consumer_key, consumer_secret)
 ## Grab data
 
 ```{r, eval=FALSE}
-tl_hidcom <- userTimeline('hidcom', n=500)
+tl_hidcom <- userTimeline('hidcom', n=1000, includeRts = TRUE)
 ```
 
 View it as data frame, make sure to convert to `UTF-8` to avoid encoding issues later:
@@ -66,7 +66,9 @@ stopwords_id = c('ini', 'dengan', 'untuk', 'yang', 'tak', 'tidak', 'gak',
                  'dari', 'dan', 'bisa', 'kita', 'ada', 'itu',
                  'akan', 'jadi', 'menjadi', 'tetap', 'per', 'bagi', 'saat',
                  'tapi', 'bukan', 'adalah', 'pula', 'aja', 'saja',
-                 'kalo', 'kalau', 'karena')
+                 'kalo', 'kalau', 'karena',
+                 'amp' # &amp;
+                 )
 ```
 
 ## Make a Corpus
@@ -143,7 +145,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_dakwatuna <- userTimeline('dakwatuna', n=500)
+# tl_dakwatuna <- userTimeline('dakwatuna', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_dakwatuna), '~/git/r-tutorials/tl_dakwatuna_2015-04-02.csv')
 df <- read.csv('tl_dakwatuna_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -167,7 +169,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_suaradotcom <- userTimeline('suaradotcom', n=500)
+# tl_suaradotcom <- userTimeline('suaradotcom', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_suaradotcom), '~/git/r-tutorials/tl_suaradotcom_2015-04-02.csv')
 df <- read.csv('tl_suaradotcom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -191,7 +193,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_kompascom <- userTimeline('kompascom', n=500)
+# tl_kompascom <- userTimeline('kompascom', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_kompascom), '~/git/r-tutorials/tl_kompascom_2015-04-02.csv')
 df <- read.csv('tl_kompascom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -215,7 +217,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_vivanews <- userTimeline('VIVAnews', n=500)
+# tl_vivanews <- userTimeline('VIVAnews', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_vivanews), '~/git/r-tutorials/tl_vivanews_2015-04-02.csv')
 df <- read.csv('tl_vivanews_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -223,7 +225,7 @@ tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
                  removePunctuation = TRUE,
-                 stopwords = c(stopwords_id, 'viva', 'vivanews', 'vivacoid') ))
+                 stopwords = c(stopwords_id, 'viva', 'vivanews', 'vivacoid', 'vivalife', 'vivabola', 'vivalog') ))
 m <- as.matrix(tdm)
 wf <- sort(rowSums(m), decreasing=TRUE)
 wf <- wf[wf > 0]
@@ -239,7 +241,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_liputan6dotcom <- userTimeline('liputan6dotcom', n=500)
+# tl_liputan6dotcom <- userTimeline('liputan6dotcom', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_liputan6dotcom), '~/git/r-tutorials/tl_liputan6dotcom_2015-04-02.csv')
 df <- read.csv('tl_liputan6dotcom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -263,7 +265,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_pkspiyungan <- userTimeline('pkspiyungan', n=500)
+# tl_pkspiyungan <- userTimeline('pkspiyungan', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_pkspiyungan), '~/git/r-tutorials/tl_pkspiyungan_2015-04-02.csv')
 df <- read.csv('tl_pkspiyungan_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -287,7 +289,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_mtlovenhoney <- userTimeline('MTlovenhoney', n=500)
+# tl_mtlovenhoney <- userTimeline('MTlovenhoney', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_mtlovenhoney), '~/git/r-tutorials/tl_mtlovenhoney_2015-04-02.csv')
 df <- read.csv('tl_mtlovenhoney_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
@@ -311,7 +313,7 @@ library(twitteR)
 library(tm)
 library(wordcloud)
 
-# tl_farhatabbaslaw <- userTimeline('farhatabbaslaw', n=500)
+# tl_farhatabbaslaw <- userTimeline('farhatabbaslaw', n=1000, includeRts = TRUE)
 # write.csv(twListToDF(tl_farhatabbaslaw), '~/git/r-tutorials/tl_farhatabbaslaw_2015-04-02.csv')
 df <- read.csv('tl_farhatabbaslaw_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
