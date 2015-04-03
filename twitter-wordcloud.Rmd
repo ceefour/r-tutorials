@@ -2,7 +2,9 @@
 title: "Word Clouds of Indonesian Media Outlet Twitter User Timelines"
 author: "Hendy Irawan"
 date: "02/04/2015"
-output: html_document
+output:
+  html_document:
+    self_contained: no
 ---
 
 ## R Programming Language Tutorial Videos on YouTube
@@ -63,7 +65,7 @@ write.csv(twListToDF(tl_hidcom), 'tl_hidcom.csv')
 
 ```{r}
 stopwords_id = c('ini', 'dengan', 'untuk', 'yang', 'tak', 'tidak', 'gak',
-                 'dari', 'dan', 'bisa', 'kita', 'ada', 'itu',
+                 'dari', 'dan', 'atau', 'bisa', 'kita', 'ada', 'itu',
                  'akan', 'jadi', 'menjadi', 'tetap', 'per', 'bagi', 'saat',
                  'tapi', 'bukan', 'adalah', 'pula', 'aja', 'saja',
                  'kalo', 'kalau', 'karena',
@@ -84,12 +86,16 @@ Make a **tm** `Corpus` from the data frame `VectorSource`:
 ```{r}
 library(tm)
 tl_hidcom.corpus <- Corpus(VectorSource(tl_hidcom.df$text))
+corpus <- tl_hidcom.corpus
 ```
 
 Make a `TermDocumentMatrix`, with desired text preprocessors:
 
 ```{r}
-tl_hidcom.tdm <- TermDocumentMatrix(tl_hidcom.corpus,
+# Remove Twitter shortened links
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
+# Make TermDocumentMatrix
+tl_hidcom.tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
                  removePunctuation = TRUE,
@@ -146,9 +152,10 @@ library(tm)
 library(wordcloud)
 
 # tl_dakwatuna <- userTimeline('dakwatuna', n=1000, includeRts = TRUE)
-# write.csv(twListToDF(tl_dakwatuna), '~/git/r-tutorials/tl_dakwatuna_2015-04-02.csv')
-df <- read.csv('tl_dakwatuna_2015-04-02.csv')
+# write.csv(twListToDF(tl_dakwatuna), '~/git/r-tutorials/tl_dakwatuna_2015-04-03.csv')
+df <- read.csv('tl_dakwatuna_2015-04-03.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -173,6 +180,7 @@ library(wordcloud)
 # write.csv(twListToDF(tl_suaradotcom), '~/git/r-tutorials/tl_suaradotcom_2015-04-02.csv')
 df <- read.csv('tl_suaradotcom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -197,6 +205,7 @@ library(wordcloud)
 # write.csv(twListToDF(tl_kompascom), '~/git/r-tutorials/tl_kompascom_2015-04-02.csv')
 df <- read.csv('tl_kompascom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -221,6 +230,7 @@ library(wordcloud)
 # write.csv(twListToDF(tl_vivanews), '~/git/r-tutorials/tl_vivanews_2015-04-02.csv')
 df <- read.csv('tl_vivanews_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -245,6 +255,7 @@ library(wordcloud)
 # write.csv(twListToDF(tl_liputan6dotcom), '~/git/r-tutorials/tl_liputan6dotcom_2015-04-02.csv')
 df <- read.csv('tl_liputan6dotcom_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -269,6 +280,7 @@ library(wordcloud)
 # write.csv(twListToDF(tl_pkspiyungan), '~/git/r-tutorials/tl_pkspiyungan_2015-04-02.csv')
 df <- read.csv('tl_pkspiyungan_2015-04-02.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
@@ -290,14 +302,17 @@ library(tm)
 library(wordcloud)
 
 # tl_mtlovenhoney <- userTimeline('MTlovenhoney', n=1000, includeRts = TRUE)
-# write.csv(twListToDF(tl_mtlovenhoney), '~/git/r-tutorials/tl_mtlovenhoney_2015-04-02.csv')
-df <- read.csv('tl_mtlovenhoney_2015-04-02.csv')
+# df <- twListToDF(tl_mtlovenhoney)
+# df$text <- iconv(df$text, to='UTF-8')
+# write.csv(df, '~/git/r-tutorials/tl_mtlovenhoney_2015-04-03.csv')
+df <- read.csv('tl_mtlovenhoney_2015-04-03.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,
                  removePunctuation = TRUE,
-                 stopwords = c(stopwords_id, 'mtlovenhoney', 'mario', 'teguh') ))
+                 stopwords = c(stopwords_id, 'mtlovenhoney', 'mario', 'teguh', 'marioteguh', 'mtgw') ))
 m <- as.matrix(tdm)
 wf <- sort(rowSums(m), decreasing=TRUE)
 wf <- wf[wf > 0]
@@ -314,9 +329,12 @@ library(tm)
 library(wordcloud)
 
 # tl_farhatabbaslaw <- userTimeline('farhatabbaslaw', n=1000, includeRts = TRUE)
-# write.csv(twListToDF(tl_farhatabbaslaw), '~/git/r-tutorials/tl_farhatabbaslaw_2015-04-02.csv')
-df <- read.csv('tl_farhatabbaslaw_2015-04-02.csv')
+# df <- twListToDF(tl_farhatabbaslaw)
+# df$text <- iconv(df$text, to='UTF-8')
+# write.csv(df, '~/git/r-tutorials/tl_farhatabbaslaw_2015-04-03.csv')
+df <- read.csv('tl_farhatabbaslaw_2015-04-03.csv')
 corpus <- Corpus(VectorSource(df$text))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('http\\S+t.co\\S+', '', x)))
 tdm <- TermDocumentMatrix(corpus,
   control = list(stripWhitespace = TRUE, tolower = TRUE,
                  removeNumbers = TRUE,

@@ -2,7 +2,9 @@
 title: "Twitter Engagement Analysis: Retweets and Favorites"
 author: "Hendy Irawan"
 date: "April 3, 2015"
-output: html_document
+output:
+  html_document:
+    self_contained: no
 ---
 
 ## R Programming Language Tutorial Videos on YouTube
