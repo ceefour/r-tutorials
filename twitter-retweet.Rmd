@@ -87,7 +87,7 @@ byHourOfDay <-ddply(df, ~hourOfDay, summarise,
                     favoriteRatioSum = sum(as.numeric(favoriteRatio)))
 #View(byHourOfDay)
 
-engagementScale = 10
+engagementScale <- 10
 ggplot(byHourOfDay, aes(x=hourOfDay, y=tweetCount, fill=hourOfDay)) + 
   ylim(0, max(byHourOfDay$tweetCount)) +
   geom_bar(stat='identity') + 
@@ -97,4 +97,29 @@ ggplot(byHourOfDay, aes(x=hourOfDay, y=tweetCount, fill=hourOfDay)) +
   geom_smooth(method='loess', aes(y=engagementScale*favoriteMean), fill='orange', color='orange') +
   scale_x_continuous(breaks=byHourOfDay$hourOfDay) +
   ggtitle('@dakwatuna tweets by hour-of-day')
+```
+
+## Tweets, Retweets, Favorites, and their ratios by Day-of-Week
+
+```{r}
+library(plyr)
+library(ggplot2)
+
+byDayOfWeek <-ddply(df, ~dayOfWeek, summarise,
+                    tweetCount = length(text),
+                    retweetSum = sum(retweetCount), retweetMean = mean(retweetCount), retweetSd = sd(retweetCount), retweetMax = max(retweetCount),
+                    favoriteSum = sum(favoriteCount), favoriteMean = mean(favoriteCount), favoriteSd = sd(favoriteCount), favoriteMax = max(favoriteCount),
+                    favoriteRatioSum = sum(as.numeric(favoriteRatio)))
+#View(byDayOfWeek)
+
+dayOfWeeks <- c('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
+twitterScreenName <- 'dakwatuna'
+engagementScale <- 10
+ggplot(byDayOfWeek, aes(x=dayOfWeek, y=tweetCount, fill=dayOfWeek)) + 
+  ylim(0, max(byDayOfWeek$tweetCount)) +
+  geom_bar(stat='identity') + 
+  geom_pointrange(aes(y=engagementScale*retweetMean, ymin=engagementScale*pmax(retweetMean-retweetSd, 0), ymax=engagementScale*(retweetMean+retweetSd), size=favoriteRatioSum), color='green') +
+  geom_pointrange(aes(y=engagementScale*favoriteMean, ymin=engagementScale*pmax(favoriteMean-favoriteSd, 0), ymax=engagementScale*(favoriteMean+favoriteSd)), size=1, stat='identity', color='orange') +
+  scale_x_discrete(limits=dayOfWeeks) +
+  ggtitle(paste('@', twitterScreenName, ' tweets by day-of-week', sep=''))
 ```
