@@ -64,11 +64,11 @@ write.csv(twListToDF(tl_hidcom), 'tl_hidcom.csv')
 ## Prepare Stop Words
 
 ```{r}
-stopwords_id = c('ini', 'dengan', 'untuk', 'yang', 'tak', 'tidak', 'gak',
+stopwords_id = c('di', 'ke', 'ini', 'dengan', 'untuk', 'yang', 'tak', 'tidak', 'gak',
                  'dari', 'dan', 'atau', 'bisa', 'kita', 'ada', 'itu',
                  'akan', 'jadi', 'menjadi', 'tetap', 'per', 'bagi', 'saat',
                  'tapi', 'bukan', 'adalah', 'pula', 'aja', 'saja',
-                 'kalo', 'kalau', 'karena',
+                 'kalo', 'kalau', 'karena', 'pada', 'kepada', 'terhadap',
                  'amp' # &amp;
                  )
 ```
