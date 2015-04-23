@@ -105,14 +105,14 @@ summary(tl_hidcom.df)</code></pre>
 ##  3rd Qu.:69.25  
 ##  Max.   :92.00  
 ##                 
-##                                                                                                                                            text   
-##  100 rumah dari pemerintah unt program transmigrasi perambah hutan yg sebelumnya nomaden tidak semua berpenghuni | #RADIKAL                  : 1  
-##  26 th @mjlhidayatullah &amp;amp; 19 th @hidcom berhidmat pd ummat #KembalikanMediaIslam http://t.co/3CYvcx3AbN                                  : 1  
-##  26 th @mjlhidayatullah &amp;amp; 19 th @hidcom berhidmat pd ummat #KembalikanMediaIslam http://t.co/fvjwAoBkbI                                  : 1  
-##  26 th @mjlhidayatullah &amp;amp; 19 th @hidcom berhidmat pd ummat #KembalikanMediaIslam http://t.co/GEGTxxDfvQ                                  : 1  
-##  Adalah Ando, anak muda usia 34 tahun penduduk dusun Momma, pedalaman jauh Mamuju | #Radikal                                                 : 1  
-##  ada virus radikalnya :) @kupinang:Kasihanilah org yg panik @emthorif: speedy jogja istimewa jg mash diblokir @hidcom http://t.co/9c0szlAZEb&quot;: 1  
-##  (Other)                                                                                                                                     :86  
+##                                                                                                                                         text   
+##  &quot;Berislam Tanpa Ghuluw [berlebih-lebihan]&quot; contoh2 konten @hidcom http://t.co/OSi7u4tT8w, mungkin ini trll RADIKAL http://t.co/qDJALouhJU: 1  
+##  &quot;Di sana sini di ruangan berlantai dipenuhi kotoran hewan,  nampak lama tidak terjamah manusia,â ujar Muhammad Bashori | #RADIKAL      : 1  
+##  @andreyferriyan mudah2an sgr bisa ya?                                                                                                    : 1  
+##  @mashurul alhamdulillah                                                                                                                  : 1  
+##  100 rumah dari pemerintah unt program transmigrasi perambah hutan yg sebelumnya nomaden tidak semua berpenghuni | #RADIKAL               : 1  
+##  26 th @mjlhidayatullah &amp;amp; 19 th @hidcom berhidmat pd ummat #KembalikanMediaIslam http://t.co/3CYvcx3AbN                               : 1  
+##  (Other)                                                                                                                                  :86  
 ##  favorited       favoriteCount             replyToSN 
 ##  Mode :logical   Min.   : 0.000   andreyferriyan: 1  
 ##  FALSE:92        1st Qu.: 0.000   mashurul      : 1  
@@ -138,10 +138,10 @@ summary(tl_hidcom.df)</code></pre>
 ##  Max.   :5.836e+17   Max.   :1.852e+09  
 ##                      NA&#39;s   :88         
 ##                                                                                statusSource
-##  &lt;a href=&quot;https://about.twitter.com/products/tweetdeck&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt; :23   
-##  &lt;a href=&quot;http://twitter.com/download/android&quot; rel=&quot;nofollow&quot;&gt;Twitter for Android&lt;/a&gt;: 7   
 ##  &lt;a href=&quot;http://twitter.com&quot; rel=&quot;nofollow&quot;&gt;Twitter Web Client&lt;/a&gt;                  :57   
+##  &lt;a href=&quot;http://twitter.com/download/android&quot; rel=&quot;nofollow&quot;&gt;Twitter for Android&lt;/a&gt;: 7   
 ##  &lt;a href=&quot;http://twitterfeed.com&quot; rel=&quot;nofollow&quot;&gt;twitterfeed&lt;/a&gt;                     : 5   
+##  &lt;a href=&quot;https://about.twitter.com/products/tweetdeck&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt; :23   
 ##                                                                                            
 ##                                                                                            
 ##                                                                                            
@@ -166,11 +166,11 @@ summary(tl_hidcom.df)</code></pre>
 </div>
 <div id="prepare-stop-words" class="section level2">
 <h2>Prepare Stop Words</h2>
-<pre class="r"><code>stopwords_id = c(&#39;ini&#39;, &#39;dengan&#39;, &#39;untuk&#39;, &#39;yang&#39;, &#39;tak&#39;, &#39;tidak&#39;, &#39;gak&#39;,
+<pre class="r"><code>stopwords_id = c(&#39;di&#39;, &#39;ke&#39;, &#39;ini&#39;, &#39;dengan&#39;, &#39;untuk&#39;, &#39;yang&#39;, &#39;tak&#39;, &#39;tidak&#39;, &#39;gak&#39;,
                  &#39;dari&#39;, &#39;dan&#39;, &#39;atau&#39;, &#39;bisa&#39;, &#39;kita&#39;, &#39;ada&#39;, &#39;itu&#39;,
                  &#39;akan&#39;, &#39;jadi&#39;, &#39;menjadi&#39;, &#39;tetap&#39;, &#39;per&#39;, &#39;bagi&#39;, &#39;saat&#39;,
                  &#39;tapi&#39;, &#39;bukan&#39;, &#39;adalah&#39;, &#39;pula&#39;, &#39;aja&#39;, &#39;saja&#39;,
-                 &#39;kalo&#39;, &#39;kalau&#39;, &#39;karena&#39;,
+                 &#39;kalo&#39;, &#39;kalau&#39;, &#39;karena&#39;, &#39;pada&#39;, &#39;kepada&#39;, &#39;terhadap&#39;,
                  &#39;amp&#39; # &amp;amp;
                  )</code></pre>
 </div>
@@ -184,7 +184,7 @@ summary(tl_hidcom.df)</code></pre>
 ## [4] Termasuk sunyi dari suasana dakwah sampai waktu yang tidak mereka ketahui batasnya | #RADIKAL                                              
 ## [5] Inilah kesunyian Momma | #Radikal http://t.co/A6Fh46Q3L6                                                                                   
 ## [6] Rumahnya sedikit agak rapi meski tetap menunjukan kesunyiannya | #RADIKAL                                                                  
-## 92 Levels: 100 rumah dari pemerintah unt program transmigrasi perambah hutan yg sebelumnya nomaden tidak semua berpenghuni | #RADIKAL ...</code></pre>
+## 92 Levels: &quot;Berislam Tanpa Ghuluw [berlebih-lebihan]&quot; contoh2 konten @hidcom http://t.co/OSi7u4tT8w, mungkin ini trll RADIKAL http://t.co/qDJALouhJU ...</code></pre>
 <p>Make a <strong>tm</strong> <code>Corpus</code> from the data frame <code>VectorSource</code>:</p>
 <pre class="r"><code>library(tm)</code></pre>
 <pre><code>## Loading required package: NLP</code></pre>
@@ -202,18 +202,18 @@ tl_hidcom.tdm &lt;- TermDocumentMatrix(corpus,
 <p>Get the matrix from the <code>TermDocumentMatrix</code>:</p>
 <pre class="r"><code>tl_hidcom.m &lt;- as.matrix(tl_hidcom.tdm)
 tl_hidcom.m[1:10, 1:20]</code></pre>
-<pre><code>##               Docs
-## Terms          1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
-##   abdi         0 0 0 0 0 0 0 0 0  1  0  0  0  0  0  0  0  0  0  0
-##   aceh         0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   achyatahmad  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   agak         0 0 0 0 0 1 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   agar         0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   agenda       0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   ajak         0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   ajamujahadah 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   akh          0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
-##   akses        0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0</code></pre>
+<pre><code>##                Docs
+## Terms           1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+##   âistirahat  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   âbusana     0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  1
+##   âdibutuhkan 0 0 0 0 0 0 0 0 1  0  0  0  0  0  0  0  0  0  0  0
+##   âterorisme  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   abdi          0 0 0 0 0 0 0 0 0  1  0  0  0  0  0  0  0  0  0  0
+##   aceh          0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   achyatahmad   0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   agak          0 0 0 0 0 1 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   agar          0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0
+##   agenda        0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0</code></pre>
 <pre class="r"><code># View(tl_hidcom.m)</code></pre>
 <p>Get the word frequencies for <code>freq &gt; 0</code>, and sort them (nice way):</p>
 <pre class="r"><code>tl_hidcom.wf &lt;- sort(rowSums(tl_hidcom.m), decreasing=TRUE)
